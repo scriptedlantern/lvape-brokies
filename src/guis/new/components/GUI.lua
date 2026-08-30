@@ -24,7 +24,7 @@ logo.Size = UDim2.fromOffset(55, 16)
 logo.Parent = window
 local v4logo = Instance.new('ImageLabel')
 v4logo.BackgroundTransparency = 1
-v4logo.Image = getvapeasset('newvape/assets/new/v4mini.png')
+v4logo.Image = getvapeasset('newvape/assets/new/lanternvape_sidebar.png')
 v4logo.Name = 'V4Logo'
 v4logo.Position = UDim2.new(1, -1, 0, 0)
 v4logo.Size = UDim2.fromOffset(23, 16)
@@ -161,6 +161,26 @@ end)
 
 settingsbutton.MouseButton1Click:Connect(function()
 	settingspane.Object.Visible = true
+end)
+
+-- LanternVape mobile toggle branding.
+-- The button itself is created later by vape:Load() when TouchEnabled is true,
+-- so watch for that exact 32x32 toggle and swap only its icon.
+gui.ChildAdded:Connect(function(child)
+	if not child:IsA('TextButton') then
+		return
+	end
+
+	if child.Size ~= UDim2.fromOffset(32, 32) or child.Position ~= UDim2.new(1, -90, 0, 4) then
+		return
+	end
+
+	task.defer(function()
+		local image = child:FindFirstChildOfClass('ImageLabel')
+		if image then
+			image.Image = getvapeasset('newvape/assets/new/lanternvape_toggle.jpeg')
+		end
+	end)
 end)
 
 windowlist:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
